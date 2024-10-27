@@ -1,14 +1,12 @@
 ###
-GET https://example.com/comments?page=2&pageSize=10
+GET http://localhost:5454/users
 
 ###
-GET https://example.com/comments?page=2&pageSize=10
-
-###
-POST https://example.com/comments HTTP/1.1
+POST http://localhost:5454/users
 content-type: application/json
 
 {
     "name": "sample",
+    "email": "asdasd@gmail.com",
     "time": "Wed, 21 Oct 2015 18:27:50 GMT"
 }

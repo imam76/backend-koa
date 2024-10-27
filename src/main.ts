@@ -1,9 +1,15 @@
 import Koa from 'koa';
+import bodyParser from 'koa-bodyparser';
+import router from './routes';
+import userRouter from './routes/users';
+
 const app = new Koa();
 const port = 5454;
 
-// logger
+// Middleware untuk parsing body
+app.use(bodyParser());
 
+// logger
 app.use(async (ctx: { response: { get: (arg0: string) => any; }; method: any; url: any; }, next: () => any) => {
   await next();
   const rt = ctx.response.get('X-Response-Time');
@@ -19,9 +25,9 @@ app.use(async (ctx: { set: (arg0: string, arg1: string) => void; }, next: () => 
   ctx.set('X-Response-Time', `${ms}ms`);
 });
 
-app.use(async (ctx: { body: string; }) => {
-  ctx.body = 'Hallo Dunia'
-});
+// Pasang router ke Koa
+app.use(router.routes()).use(router.allowedMethods());
+app.use(userRouter.routes()).use(userRouter.allowedMethods());
 
 app.listen(port);
 
